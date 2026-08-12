@@ -1,0 +1,226 @@
+@import "tailwindcss";
+@theme {
+  /* Fire/Energy identity — warm orange-to-red flame gradient replacing the
+     old teal/emerald palette. Token names unchanged so every existing
+     class (text-primary-500, bg-primary, ring-primary-400, etc.) keeps
+     working with zero markup changes.
+
+     Contrast note (WCAG 2.1, computed relative luminance): primary-500 and
+     primary-600 are the two shades used site-wide as solid fills behind
+     WHITE text/icons (FOFi's launcher button, MainLayout's logo badge and
+     avatar ring, chat bubbles, ProfilePage's avatar, HomePage icon badges —
+     grep `bg-primary-500.*text-white` across src/ to see the full list).
+     The straightforward orange-500/600 values (#f97316 ≈2.8:1, #ea580c
+     ≈3.5:1 against white) both fail AA (4.5:1 for normal text, 3:1 for
+     large/bold — most of these are small icons/avatars, not large text, so
+     the stricter threshold applies). Shifted the scale so 500 and 600 land
+     on shades that pass (≈5.2:1 and ≈7:1+) instead of adding a second,
+     parallel "safe" token that only .btn-primary would use while every
+     other already-shipped bg-primary-500 usage stayed broken. 400 and
+     lighter are unaffected — those are used as text/icon color on white
+     backgrounds or accents, a different (and here, unproblematic)
+     contrast direction. */
+  --color-primary-50: #fff7ed;
+  --color-primary-100: #ffedd5;
+  --color-primary-200: #fed7aa;
+  --color-primary-300: #fdba74;
+  --color-primary-400: #fb923c;
+  --color-primary-500: #c2410c;
+  --color-primary-600: #9a3412;
+  --color-primary-700: #7c2d12;
+  --color-primary: #c2410c;
+
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e7eb;
+  --color-neutral-300: #d1d5db;
+  --color-neutral-400: #9ca3af;
+  --color-neutral-500: #6b7280;
+  --color-neutral-600: #4b5563;
+
+  /* Ember amber accent — keeps the flame family (orange core, amber glow)
+     instead of the old unrelated amber-on-teal pairing. */
+  --color-accent: #f59e0b;
+  --color-success: #16a34a;
+  /* #d97706 (amber-600) ≈3.3:1 with white — also darkened for the same
+     reason as primary-500/600 above (.btn-warning uses this as a solid
+     white-text fill). */
+  --color-warning: #b45309;
+  --color-danger: #dc2626;
+
+  --font-sans: Cairo, Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue";
+}
+
+/* Self-hosted font-face declarations */
+@font-face {
+	font-family: 'InterLocal';
+	src: url('/fonts/Inter-Regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'InterLocal';
+	src: url('/fonts/Inter-SemiBold.woff2') format('woff2');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'CairoLocal';
+	src: url('/fonts/Cairo-Regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'CairoLocal';
+	src: url('/fonts/Cairo-Bold.woff2') format('woff2');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+:root{
+	--bg-default: #ffffff;
+	--bg-muted: #ffffff;
+	--text-default: #1F2937; /* dark slate grey */
+	--brand: #C2410C; /* fire orange — matches --color-primary-500 above, kept AA-safe for white text */
+	--brand-600: #9A3412; /* matches --color-primary-600 */
+	--brand-400: #FB923C;
+	--accent: #f59e0b; /* ember amber */
+	--warning: #B45309; /* matches --color-warning above */
+	--muted: #6b7280;
+	--surface: #ffffff;
+	--card-shadow: 0 12px 30px -12px rgba(234,88,12,0.16);
+}
+
+@layer base {
+	html, body, #root {
+		height: 100%;
+	}
+	body {
+		background-color: var(--bg-default);
+		color: var(--text-default);
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		/* Use local self-hosted fonts; fall back to system if unavailable */
+		font-family: InterLocal, CairoLocal, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+	}
+	h1, h2, h3, h4, h5 {
+		line-height: 1.05;
+	}
+	.container-mobile {
+		max-width: 460px;
+		margin-inline: auto;
+		padding-inline: 16px;
+	}
+	.visually-hidden {
+		position: absolute !important;
+		height: 1px; width: 1px;
+		overflow: hidden; clip: rect(1px, 1px, 1px, 1px);
+		white-space: nowrap;
+	}
+}
+
+/* Global responsive helpers */
+* { box-sizing: border-box; }
+img { max-width: 100%; height: auto; display: block; }
+svg { max-width: 100%; height: auto; display: inline-block; vertical-align: middle; }
+button, .btn { min-height: 44px; }
+html[dir="rtl"] body { direction: rtl; }
+
+/* subtle focus outline for accessibility */
+@layer components {
+	/* Smooth UI transitions and micro-animations */
+	:root { --anim-fast: 150ms; --anim-base: 220ms; }
+
+	.animate-fade-in { animation: fadeIn var(--anim-base) ease both; }
+
+	@keyframes fadeIn {
+		from { opacity: 0; transform: translateY(6px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	.btn { transition: transform var(--anim-fast) ease, box-shadow var(--anim-fast) ease, background-color var(--anim-fast) ease; }
+	.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(234,88,12,0.14); }
+	.btn:active { transform: translateY(0); }
+
+	/* RTL-aware icon spacing: use logical properties */
+	.icon-inline { margin-inline-end: 0.75rem; margin-inline-start: 0; }
+
+	/* Slightly larger card padding on desktop */
+	@media (min-width: 640px) {
+		.card { padding: 2rem; border-radius: 1.25rem; }
+	}
+	.focus-ring:focus {
+		outline: 2px solid rgba(245,158,11,0.12);
+		outline-offset: 2px;
+	}
+}
+
+@layer components {
+	/* Design tokens now live in :root (see top of file) so they resolve
+	   everywhere, not just under .ds-root. Kept as a no-op class so existing
+	   markup referencing "ds-root" doesn't break. */
+	.ds-root {}
+
+	/* Buttons (explicit CSS to avoid @apply resolution issues) */
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		font-weight: 800;
+		border-radius: 0.75rem;
+		transition: all 200ms ease;
+		outline: none;
+	}
+	.btn:disabled { opacity: 0.5; pointer-events: none; }
+
+	.btn-sm { font-size: 0.75rem; padding: 0.5rem 0.75rem; min-height: 36px; }
+	.btn-md { font-size: 0.875rem; padding: 0.75rem 1rem; min-height: 44px; }
+	.btn-lg { font-size: 1rem; padding: 1rem 1.5rem; min-height: 52px; }
+
+	.btn-primary {
+		background-color: var(--brand);
+		color: #ffffff;
+		box-shadow: var(--card-shadow);
+	}
+	.btn-primary:hover { background-color: var(--brand-600); }
+
+	.btn-secondary { background-color: #0f172a; color: var(--brand-400); }
+	.btn-secondary:hover { background-color: #1e293b; }
+
+	.btn-outline { border: 2px solid var(--accent); color: #0f172a; background: transparent; }
+	.btn-outline:hover { background-color: rgba(245,158,11,0.08); }
+
+	.btn-ghost { background: transparent; color: var(--brand-600); }
+	.btn-ghost:hover { background-color: rgba(249,115,22,0.08); }
+
+	/* #16a34a (green-600, --color-success) ≈3.5:1 with white — same
+	   contrast issue as primary-500/600 and warning above, fixed the same
+	   way: use the darker shade as the base fill, not just on hover. */
+	.btn-success { background-color: #15803d; color: #ffffff; }
+	.btn-success:hover { background-color: #166534; }
+
+	.btn-warning { background-color: var(--warning); color: #ffffff; }
+	.btn-warning:hover { background-color: #92400e; }
+
+	.btn-danger { background-color: var(--color-danger); color: #ffffff; }
+	.btn-danger:hover { background-color: #b91c1c; }
+
+	/* Card */
+	.card { background: #ffffff; border-radius: 1rem; padding: 1rem; border: 1px solid #eef2f7; box-shadow: var(--card-shadow); }
+	.card-hover { transition: all 200ms ease; cursor: pointer; }
+	.card-hover:hover { box-shadow: 0 10px 24px rgba(0,0,0,0.06); border-color: #fbbf24; }
+
+	/* Input */
+	.input {
+		display: block; width: 100%; border-radius: 0.75rem; border: 1px solid #e5e7eb; background: #ffffff; padding: 0.75rem 1rem; font-size: 0.875rem; color: #0f172a;
+	}
+	.input:focus { box-shadow: 0 8px 22px -10px rgba(234,88,12,0.14); border-color: var(--brand); }
+
+	/* Empty state */
+	.empty { text-align: center; padding: 2rem 0; color: #374151; gap: 0.75rem; }
+}

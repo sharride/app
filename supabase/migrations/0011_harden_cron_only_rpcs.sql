@@ -1,0 +1,21 @@
+-- =============================================================================
+-- sharride — 0011_harden_cron_only_rpcs.sql
+--
+-- WHY THIS FILE EXISTS
+-- ---------------------------------------------------------------------------
+-- Phase 7 security review, continued: notify_incomplete_profiles_rpc()
+-- (0009_verification_fixes.sql) is the same shape as
+-- notify_expiring_journeys_rpc() / notify_expiring_search_requests_rpc() /
+-- expire_search_requests_rpc() (0007_retention.sql) — a bulk, cron-run
+-- operation with no auth.uid() check by design — but only 0007's three got
+-- the "revoke execute from anon/authenticated" hardening added during that
+-- review; this one was introduced afterward (0009) and missed it.
+--
+-- Not editing 0009 in place: it arrived already-written from outside this
+-- session (unlike 0007, which was still mine to amend), so whether it's
+-- already applied somewhere can't be confirmed from here — per the "don't
+-- edit a migration that might already be shipped" rule, a small corrective
+-- migration is the safe move instead. A plain REVOKE is idempotent and safe
+-- to run whether or not 0009 has been applied yet.
+-- =============================================================================
+revoke execute on function notify_incomplete_profiles_rpc() from public, anon, authenticated;
