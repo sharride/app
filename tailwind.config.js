@@ -2,16 +2,14 @@
 // NOTE: this project uses Tailwind v4's CSS-first config (`@theme` block in
 // src/index.css) as the actual source of truth for colors — that's what
 // generates the `text-primary-*` / `bg-primary-*` / etc. utility classes.
-// This file's `theme.extend.colors` was left on the old teal palette after
-// index.css was updated to the Fire/Energy orange palette (Phase 5), which
-// meant two different color definitions existed for the same token names —
-// depending on Tailwind's v4 merge order that's either a silent conflict or,
-// worse, this file silently winning and the whole "Fire/Energy" rebrand
-// never actually reaching the compiled CSS. Kept in sync here as a safety
-// net either way; if `content`-glob-only detection turns out to be all v4
-// still needs from this file, the `colors` block below is inert but no
-// longer wrong. See src/index.css's @theme block for the values these
-// mirror, including the contrast-driven 500/600/700 shifts.
+// This file's `theme.extend.colors` previously drifted out of sync (still
+// on the old teal palette after index.css moved to Fire/Energy orange),
+// which meant two different color definitions existed for the same token
+// names. As part of the Teal-primary + Orange-accent refinement, this file
+// has been re-synced to match src/index.css's @theme block exactly —
+// same hex values, same contrast-driven 500/600/700 shifts — so there is
+// a single consistent source of truth regardless of which config Tailwind
+// ends up reading colors from.
 export default {
   content: [
     "./index.html",
@@ -21,30 +19,34 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#fff7ed',
-          100: '#ffedd5',
-          200: '#fed7aa',
-          300: '#fdba74',
-          400: '#fb923c',
-          500: '#c2410c',
-          600: '#9a3412',
-          700: '#7c2d12',
-          800: '#6c2e0f',
-          900: '#5a260d',
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#0f766e',
+          600: '#115e59',
+          700: '#134e4a',
+          800: '#0f3f3c',
+          900: '#0c3330',
         },
         primary: {
-          DEFAULT: '#c2410c',
-          50: '#fff7ed',
-          100: '#ffedd5',
-          200: '#fed7aa',
-          300: '#fdba74',
-          400: '#fb923c',
-          500: '#c2410c',
-          600: '#9a3412',
-          700: '#7c2d12',
+          DEFAULT: '#0f766e',
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#0f766e',
+          600: '#115e59',
+          700: '#134e4a',
         },
         accent: {
-          DEFAULT: '#f59e0b',
+          DEFAULT: '#ea580c',
+          400: '#fb923c',
+          500: '#f97316',
+          600: '#ea580c',
+          700: '#c2410c',
         },
         surface: {
           DEFAULT: '#ffffff',
