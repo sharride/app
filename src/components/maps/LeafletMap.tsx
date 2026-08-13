@@ -48,7 +48,7 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
           </Marker>
         )}
         {polylinePositions.length > 0 && (
-          <Polyline positions={polylinePositions} color="#f59e0b" weight={4} opacity={0.9} />
+          <Polyline positions={polylinePositions} color="#ea580c" weight={4} opacity={0.9} />
         )}
       </MapContainer>
     </div>
