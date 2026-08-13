@@ -103,7 +103,7 @@ export const NotificationsPage: React.FC = () => {
               onClick={() => handleOpen(n)}
               className={`p-3 flex items-start gap-2 border-primary-100 ${n.link ? 'cursor-pointer' : ''} ${!n.is_read ? 'bg-primary-50/50' : ''}`}
             >
-              {!n.is_read && <span className="w-2 h-2 mt-1.5 rounded-full bg-primary-500 flex-shrink-0" aria-hidden />}
+              {!n.is_read && <span className="w-2 h-2 mt-1.5 rounded-full bg-accent-600 flex-shrink-0" aria-hidden />}
               <div className="flex-1">
                 <p className="text-xs font-black text-gray-950">{n.title}</p>
                 {n.body && <p className="text-[11px] text-gray-600 font-semibold mt-0.5">{n.body}</p>}
