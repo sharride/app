@@ -198,7 +198,7 @@ export const FOFiAssistant: React.FC = () => {
             type="button"
             onClick={() => setIsOpen(true)}
             aria-label="افتح مساعد FOFi"
-            className="pointer-events-auto absolute left-4 bottom-24 w-14 h-14 rounded-full bg-primary-500 text-white shadow-lg shadow-primary-500/40 border-2 border-white flex items-center justify-center hover:bg-primary-600 transition-colors animate-fade-in"
+            className="pointer-events-auto absolute left-4 bottom-24 w-14 h-14 rounded-full bg-accent-600 text-white shadow-lg shadow-accent-600/40 border-2 border-white flex items-center justify-center hover:bg-accent-700 transition-colors animate-fade-in"
           >
             <Sparkles className="w-6 h-6" />
           </button>
