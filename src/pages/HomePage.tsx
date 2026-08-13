@@ -38,7 +38,7 @@ export const HomePage: React.FC = () => {
   return (
     <div className="space-y-6" dir="rtl">
       {/* Hero */}
-      <section className="rounded-3xl bg-gradient-to-br from-primary-400 via-primary-500 to-brand-500 p-5 shadow-lg text-white">
+      <section className="rounded-3xl bg-gradient-to-br from-primary-400 via-primary-500 to-primary-700 p-5 shadow-lg text-white">
         <div className="flex items-center gap-2 mb-3">
           <Sparkles className="w-5 h-5 text-white" />
           <span className="text-xs font-black">المنصة الأمثل للمشاركة في التنقل</span>
