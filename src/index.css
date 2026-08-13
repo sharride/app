@@ -1,34 +1,36 @@
 @import "tailwindcss";
 @theme {
-  /* Fire/Energy identity — warm orange-to-red flame gradient replacing the
-     old teal/emerald palette. Token names unchanged so every existing
-     class (text-primary-500, bg-primary, ring-primary-400, etc.) keeps
-     working with zero markup changes.
+  /* Teal + Orange hybrid identity (Trust/Mobility/Community via teal,
+     kept as the dominant brand color; Energy/Action/CTA via orange, kept
+     as a deliberately limited accent — not the flame-everywhere palette
+     this replaces). Token names unchanged so every existing class
+     (text-primary-500, bg-primary, ring-primary-400, etc.) keeps working
+     with zero markup changes.
 
      Contrast note (WCAG 2.1, computed relative luminance): primary-500 and
      primary-600 are the two shades used site-wide as solid fills behind
-     WHITE text/icons (FOFi's launcher button, MainLayout's logo badge and
-     avatar ring, chat bubbles, ProfilePage's avatar, HomePage icon badges —
-     grep `bg-primary-500.*text-white` across src/ to see the full list).
-     The straightforward orange-500/600 values (#f97316 ≈2.8:1, #ea580c
-     ≈3.5:1 against white) both fail AA (4.5:1 for normal text, 3:1 for
+     WHITE text/icons (MainLayout's logo badge and avatar ring, chat
+     bubbles, ProfilePage's avatar, HomePage icon badges — grep
+     `bg-primary-500.*text-white` across src/ to see the full list).
+     The straightforward teal-500/600 values (#14b8a6 ≈2.5:1, #0d9488
+     ≈3.7:1 against white) both fail AA (4.5:1 for normal text, 3:1 for
      large/bold — most of these are small icons/avatars, not large text, so
      the stricter threshold applies). Shifted the scale so 500 and 600 land
-     on shades that pass (≈5.2:1 and ≈7:1+) instead of adding a second,
+     on shades that pass (≈5.5:1 and ≈8.6:1) instead of adding a second,
      parallel "safe" token that only .btn-primary would use while every
      other already-shipped bg-primary-500 usage stayed broken. 400 and
      lighter are unaffected — those are used as text/icon color on white
      backgrounds or accents, a different (and here, unproblematic)
      contrast direction. */
-  --color-primary-50: #fff7ed;
-  --color-primary-100: #ffedd5;
-  --color-primary-200: #fed7aa;
-  --color-primary-300: #fdba74;
-  --color-primary-400: #fb923c;
-  --color-primary-500: #c2410c;
-  --color-primary-600: #9a3412;
-  --color-primary-700: #7c2d12;
-  --color-primary: #c2410c;
+  --color-primary-50: #f0fdfa;
+  --color-primary-100: #ccfbf1;
+  --color-primary-200: #99f6e4;
+  --color-primary-300: #5eead4;
+  --color-primary-400: #2dd4bf;
+  --color-primary-500: #0f766e;
+  --color-primary-600: #115e59;
+  --color-primary-700: #134e4a;
+  --color-primary: #0f766e;
 
   --color-neutral-50: #fafafa;
   --color-neutral-100: #f5f5f5;
@@ -38,13 +40,25 @@
   --color-neutral-500: #6b7280;
   --color-neutral-600: #4b5563;
 
-  /* Ember amber accent — keeps the flame family (orange core, amber glow)
-     instead of the old unrelated amber-on-teal pairing. */
-  --color-accent: #f59e0b;
+  /* Orange accent — reserved for a short, deliberate list of "energy /
+     attention" spots (FOFi's launcher button, the unread-notification
+     dot, the route line on the map), never the default for buttons, nav,
+     icons, or card surfaces. accent-600 (#ea580c ≈3.5:1 with white) is
+     only ever used as a solid fill behind an ICON with no text on it, so
+     the 3:1 non-text-contrast threshold (WCAG 1.4.11) applies and it
+     passes; accent-700 (#c2410c ≈5.2:1) is available for any spot that
+     also carries text on the fill. */
+  --color-accent-400: #fb923c;
+  --color-accent-500: #f97316;
+  --color-accent-600: #ea580c;
+  --color-accent-700: #c2410c;
+  --color-accent: #ea580c;
   --color-success: #16a34a;
   /* #d97706 (amber-600) ≈3.3:1 with white — also darkened for the same
      reason as primary-500/600 above (.btn-warning uses this as a solid
-     white-text fill). */
+     white-text fill). Unrelated to the primary/accent rebrand — warning
+     stays its own amber family so it doesn't get confused with the new
+     orange accent. */
   --color-warning: #b45309;
   --color-danger: #dc2626;
 
@@ -85,14 +99,14 @@
 	--bg-default: #ffffff;
 	--bg-muted: #ffffff;
 	--text-default: #1F2937; /* dark slate grey */
-	--brand: #C2410C; /* fire orange — matches --color-primary-500 above, kept AA-safe for white text */
-	--brand-600: #9A3412; /* matches --color-primary-600 */
-	--brand-400: #FB923C;
-	--accent: #f59e0b; /* ember amber */
+	--brand: #0F766E; /* teal — matches --color-primary-500 above, kept AA-safe for white text */
+	--brand-600: #115E59; /* matches --color-primary-600 */
+	--brand-400: #2DD4BF;
+	--accent: #EA580C; /* orange — matches --color-accent-600 above, reserved for a short accent list */
 	--warning: #B45309; /* matches --color-warning above */
 	--muted: #6b7280;
 	--surface: #ffffff;
-	--card-shadow: 0 12px 30px -12px rgba(234,88,12,0.16);
+	--card-shadow: 0 12px 30px -12px rgba(15,118,110,0.16);
 }
 
 @layer base {
@@ -143,7 +157,7 @@ html[dir="rtl"] body { direction: rtl; }
 	}
 
 	.btn { transition: transform var(--anim-fast) ease, box-shadow var(--anim-fast) ease, background-color var(--anim-fast) ease; }
-	.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(234,88,12,0.14); }
+	.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(15,118,110,0.14); }
 	.btn:active { transform: translateY(0); }
 
 	/* RTL-aware icon spacing: use logical properties */
@@ -154,7 +168,7 @@ html[dir="rtl"] body { direction: rtl; }
 		.card { padding: 2rem; border-radius: 1.25rem; }
 	}
 	.focus-ring:focus {
-		outline: 2px solid rgba(245,158,11,0.12);
+		outline: 2px solid rgba(15,118,110,0.18);
 		outline-offset: 2px;
 	}
 }
@@ -189,14 +203,14 @@ html[dir="rtl"] body { direction: rtl; }
 	}
 	.btn-primary:hover { background-color: var(--brand-600); }
 
-	.btn-secondary { background-color: #0f172a; color: var(--brand-400); }
-	.btn-secondary:hover { background-color: #1e293b; }
+	.btn-secondary { background-color: #134e4a; color: var(--brand-400); }
+	.btn-secondary:hover { background-color: var(--brand-600); }
 
-	.btn-outline { border: 2px solid var(--accent); color: #0f172a; background: transparent; }
-	.btn-outline:hover { background-color: rgba(245,158,11,0.08); }
+	.btn-outline { border: 2px solid var(--brand); color: #0f172a; background: transparent; }
+	.btn-outline:hover { background-color: rgba(15,118,110,0.08); }
 
 	.btn-ghost { background: transparent; color: var(--brand-600); }
-	.btn-ghost:hover { background-color: rgba(249,115,22,0.08); }
+	.btn-ghost:hover { background-color: rgba(15,118,110,0.08); }
 
 	/* #16a34a (green-600, --color-success) ≈3.5:1 with white — same
 	   contrast issue as primary-500/600 and warning above, fixed the same
@@ -213,13 +227,13 @@ html[dir="rtl"] body { direction: rtl; }
 	/* Card */
 	.card { background: #ffffff; border-radius: 1rem; padding: 1rem; border: 1px solid #eef2f7; box-shadow: var(--card-shadow); }
 	.card-hover { transition: all 200ms ease; cursor: pointer; }
-	.card-hover:hover { box-shadow: 0 10px 24px rgba(0,0,0,0.06); border-color: #fbbf24; }
+	.card-hover:hover { box-shadow: 0 10px 24px rgba(0,0,0,0.06); border-color: #5eead4; }
 
 	/* Input */
 	.input {
 		display: block; width: 100%; border-radius: 0.75rem; border: 1px solid #e5e7eb; background: #ffffff; padding: 0.75rem 1rem; font-size: 0.875rem; color: #0f172a;
 	}
-	.input:focus { box-shadow: 0 8px 22px -10px rgba(234,88,12,0.14); border-color: var(--brand); }
+	.input:focus { box-shadow: 0 8px 22px -10px rgba(15,118,110,0.14); border-color: var(--brand); }
 
 	/* Empty state */
 	.empty { text-align: center; padding: 2rem 0; color: #374151; gap: 0.75rem; }
